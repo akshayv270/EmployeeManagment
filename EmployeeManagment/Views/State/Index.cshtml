@@ -1,0 +1,79 @@
+﻿@model IEnumerable<EmployeeManagment.Models.StateModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<p>
+    <a asp-action="CreateState">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(Model=>Model.Id)
+            </th>
+        
+          
+            <th>
+                @Html.DisplayNameFor(Model=>Model.StateName)
+            </th>
+        
+          
+            <th>
+                @Html.DisplayNameFor(Model=>Model.IsActive)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem=>item.Id)
+
+            </td>
+              
+             <td>
+                @Html.DisplayFor(modelItem=>item.StateName)
+
+            </td>
+                <td>
+               <span class="circle @(item.IsActive ? "green" : "red")"><i class="fas fa-circle"></i>
+                   </span> 
+
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                
+                <a asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+ <style>
+        .circle {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            line-height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            color: white;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .red {
+            background-color: red;
+        }
+    </style>
+

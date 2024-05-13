@@ -1,0 +1,52 @@
+﻿@model EmployeeManagment.Models.CityModel
+@{
+    ViewData["Title"] = "StateDropDemo";
+}
+
+<h1>State DropDwon</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownList("SelectedState", ViewBag.States as SelectList, "Select State", new { @id = "stateDropdown", @class = "form-control" })
+   
+     <select id="cityDropdown" name="SelectedCity" class="form-control">
+        <option value="">Select City</option>
+    </select>
+    <input type="submit" value="Submit" />
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#stateDropdown').change(function () {
+           
+            var stateId = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetCitiesByState", "State")',
+                type: 'GET',
+                data: { stateId: stateId },
+                success: function (data) {
+                    $('#cityDropdown').empty();
+                    $.each(data, function (index, city) {
+                        $('#cityDropdown').append($('<option>', {
+                           value: city.akshayID,
+                            text: city.cityName
+                            
+                        }));
+                    });
+                      
+                },
+                 error: function (xhr, status, error) {
+                    console.error(error);
+                },
+                 complete: function () {
+                    // Re-enable the state dropdown after the AJAX call is complete
+                    $('#stateDropdown').prop('disabled', false);
+                }
+            });
+        });
+    });
+</script>
+
+
